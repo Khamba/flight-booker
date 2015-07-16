@@ -21,5 +21,7 @@ seven_days = 60*60*24*7
 
 80.times do
 	r = rand(1..2)
-	Flight.create!(start_airport_id: r, finish_airport_id: toggle(r), start_datetime: Time.now + rand(-seven_days..seven_days), duration: rand(2..9) * 3600 )
+	datetime = DateTime.now + rand(-seven_days..seven_days)
+	datetime = datetime..strftime('%Y-%m-%d %H:%M:%S')
+	Flight.create!(start_airport_id: r, finish_airport_id: toggle(r), start_datetime: datetime, duration: rand(2..9) * 3600 )
 end
