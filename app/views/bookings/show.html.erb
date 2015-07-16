@@ -1,0 +1,17 @@
+<p>Booking id: <%= @booking.id %></p>
+
+<p>From: <%= @booking.flight.from_airport.code %></p>
+
+<p>To: <%= @booking.flight.to_airport.code %></p>
+
+<p>Date: <%= @booking.flight.flight_date %></p>
+
+<p>Number of passengers: <%= n = @booking.passengers.count %></p>
+
+<% n.times do |x| %>
+	<p>&nbsp;&nbsp;&nbsp; <%= x+1 %>) Name: <%= @booking.passengers[x].name %> </p>
+	<p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Email: <%= @booking.passengers[x].email %> </p><br>
+<% end %>
+
+<p></p>
+<p><%= link_to("Book another flight", root_path) %></p>

@@ -1,0 +1,32 @@
+<b> Add details and Confirm your booking </b>
+
+<%= form_for @booking do |f| %>
+	
+	<p> Flight id: <%= @flight.id %> </p>
+	<%= f.hidden_field :flight_id, value: @flight.id %>
+
+	<p>Date: <%= @flight.flight_date %></p>
+
+	<p>From: <%= @flight.from_airport.code %></p>
+
+	<p>To: <%= @flight.to_airport.code %></p>	
+
+	<% n=1 %>
+
+	<%= f.fields_for :passengers do |p| %>
+
+		<p>Details of passenger <%= n %>: </p>
+
+		<%= p.label :name %><br>
+		<%= p.text_field :name %><br><br>
+
+		<%= p.label :email %><br>
+		<%= p.text_field :email %><br><br>
+
+		<% n += 1 %>
+
+	<% end %>
+
+	<%= f.submit :Submit %>
+
+<% end %>

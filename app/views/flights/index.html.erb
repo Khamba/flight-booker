@@ -1,0 +1,37 @@
+<%= form_for :flights_search, url: root_path, method: :get do |f| %>
+	<%= f.label :from, "From: " %>
+	<%= f.select :from, @airports.map { |airport| airport.code  } %> <br><br>
+
+	<%= f.label :to, "To: " %>
+	<%= f.select :to, @airports.map { |airport| airport.code  } %> <br><br>
+
+	<%= f.label :number_of_passengers, "Number of passengers: " %>
+	<%= f.select :number_of_passengers, [1,2,3,4] %> <br><br>
+
+	<%= f.label :date %>
+	<% dates = @flights.order(:start_datetime).map { |i| i.flight_date } %>
+	<%= f.select :date, options_from_collection_for_select(dates.uniq, 'to_s', 'to_s') %> <br><br>
+
+	<%= f.submit :Submit %>
+
+<% end %>
+
+<br><br>
+<% unless params[:flights_search] == nil %>
+<b> Search Results: </b> <br><br><br>
+	<%= form_for :booking, url: new_booking_path, method: :get do |f| %>
+		<% @flights_searched_for.each do |flight| %>
+			<%= f.radio_button :flight_chosen, flight.id, :value => flight.id %>
+			<%= f.label :flight, "Flight id: #{flight.id}" %> <br><br>
+		<% end %>
+
+		<%= f.hidden_field :number_of_passengers, value: @number_of_passengers %>
+
+		<% unless @flights_searched_for.count == 0 %> <%= f.submit :Book %> <% end %>
+	<% end %>
+
+	<% if @flights_searched_for.count == 0 %>
+		<p>No flights found. Please try another search. </p>
+	<% end %>
+
+<% end %>
